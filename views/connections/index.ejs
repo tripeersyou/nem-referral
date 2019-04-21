@@ -1,0 +1,62 @@
+<% include ../layouts/header %>
+    <h1>Your Connections</h1>
+    <a href="/connections/invite" class="btn btn-primary">Connection Invites</a>
+    <br><br>
+    <div class="row">
+    <% for(let connection of connections) { %>
+        <% if(connection.accepted){ %>
+            <% if(user.id === connection.firstUserId){ %>
+            <div class="col-md-4">
+                <div class="well connection-card">
+                    <h4 class="explore-connection-name"><%- connection.secondUser.firstName %> <%- connection.secondUser.lastName %></h4>
+                    <small><%- connection.secondUser.email %></small>
+                    <br>
+                    <a href="/users/<%- connection.secondUser.id %>" class="btn btn-primary btn-block">View Profile</a>                    
+                </div> 
+            </div>
+            <% } else { %>
+            <div class="col-md-4">
+                <div class="well connection-card">
+                    <h4 class="explore-connection-name"><%- connection.firstUser.firstName %> <%- connection.firstUser.lastName %></h4>
+                    <small><%- connection.firstUser.email %></small>
+                    <br>
+                    <a href="/users/<%- connection.firstUser.id %>" class="btn btn-primary btn-block">View Profile</a>                    
+                </div> 
+            </div>
+            <% } %>
+        <% } %>
+    <% } %>
+    </div>
+    <h1>Explore Connections</h1>
+    <div class="row">
+    <% for(let u of users){ %>
+        <% isConnection = false %>
+        <% for(let connection of connections) { %>
+            <% if(u.id === connection.firstUserId || u.id === connection.secondUserId) { %>
+                <% isConnection = true %>
+            <% } %>
+        <% } %>
+        <% if(!isConnection) { %>
+        <div class="col-md-4">
+            <div class="well connection-card">
+                <h4 class="explore-connection-name"><%- u.firstName %> <%- u.lastName %></h4>
+                <small><%- u.email %></small>
+                <br>
+                <div class="btn-group connection-button-group" role="group">
+                    <div class="btn-group connection-buttons" role="group">
+                        <a href="/users/<%- u.id %>" class="btn btn-primary btn-block">View Profile</a>                    
+                    </div>
+                    <form action="/connections/invite" method="post" class="add-connection-form">
+                        <input type="hidden" name="secondUserId" value="<%- parseInt(u.id)%>">
+                        <input type="hidden" name="firstUserId" value="<%- parseInt(user.id)%>">
+                        <div class="btn-group connection-buttons" role="group">
+                            <button class="btn btn-default btn-block">Add Connection</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    <% } %>
+    </div>
+<% include ../layouts/footer %>

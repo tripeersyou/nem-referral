@@ -1,0 +1,48 @@
+<% include ../layouts/header %>
+    <% if(type === 'company') { %>
+        <h1>Job Listings</h1>
+        <a href="/listings/new" class="btn btn-primary">New Job Listing</a>
+        <br><br>
+        <div class="row">
+        <% for(let listing of listings) {%>
+            <div class="col-md-3">
+                <div class="well connection-card">
+                    <h4 class="explore-connection-name"><%- listing.title %></h4>
+                    <% if(listing.status){ %>
+                        <small>Accepting Referrals</small>
+                        <br>
+                        <form action="/listings/<%- listing.id %>/close" method="post">
+                            <button type="submit" class="btn btn-danger btn-block">Stop Submissions</button>
+                        </form>
+                    <% } else { %>
+                        <small>Not Accepting Referrals</small>
+                        <br>
+                    <% } %>
+                    <a href="/listings/<%- listing.id %>" class="btn btn-primary btn-block">View Submissions</a>
+                </div>
+            </div>
+        <% } %>
+        </div>
+    <% } else { %>
+        <h1>Job Listings</h1>
+        <div class="row">
+        <% for(let listing of listings) {%>
+            <div class="col-md-3">
+                <div class="well connection-card">
+                    <h4 class="explore-connection-name"><%- listing.title %></h4>
+                    <% if(listing.status){ %>
+                        <small>Accepting Referrals</small>
+                        <br>
+                        <a href="/listings/<%- listing.id %>" class="btn btn-default btn-block">View Job Listing</a>
+                        <a href="/listings/<%- listing.id %>/new" class="btn btn-primary btn-block">Refer Connection</a>
+                    <% } else { %>
+                        <small>Not Accepting Referrals</small>
+                        <br>
+                        <a href="/listings/<%- listing.id %>" class="btn btn-default btn-block disabled">View Job Listing</a>
+                    <% } %>                  
+                </div>
+            </div>
+        <% } %>
+        </div>
+    <% } %>
+<% include ../layouts/footer %>

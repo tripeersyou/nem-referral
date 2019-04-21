@@ -1,0 +1,73 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">ReferNEM</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav">
+        <% if (user) { %>
+            <% if (type === 'user') { %>
+                <li><a href="/">Home</a></li>
+                <li><a href="/connections">Your Connections</a></li>
+                <li><a href="/companies">Explore Companies</a></li>
+                <li><a href="/referrals">Your Referrals</a></li>
+                <li><a href="/listings">Job Listings</a></li>
+            <% } else { %>
+                <li><a href="/">Home</a></li>
+                <li><a href="/listings">Job Listings</a></li>
+                <li><a href="/followers">Followers</a></li>
+            <% } %>
+        <% } else { %>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact Us</a></li>
+        <% } %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if (user) { %>
+            <% if (type === 'user') { %>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%- user.firstName %><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">ReferNEM Profile</a></li>
+                <li><a href="#">NEM Profile</a></li>
+                <li><a href="#">Edit ReferNEM Profile</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+            </li>
+            <% } else { %>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%- user.companyName %><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">ReferNEM Profile</a></li>
+                <li><a href="#">NEM Profile</a></li>
+                <li><a href="#">Edit ReferNEM Profile</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/companies/logout">Logout</a></li>
+            </ul>
+            </li>
+            <% } %>
+        <% } else { %>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="/users/login">User Login</a></li>
+                <li><a href="/users/register">User Registration</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/companies/login">Company Login</a></li>
+                <li><a href="/companies/register">Company Registration</a></li>
+            </ul>
+            </li>
+        <% } %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

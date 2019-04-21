@@ -1,0 +1,26 @@
+<% include ../layouts/header %>
+    <h1>Connection Invitations</h1>
+    <div class="row">
+    <% for(let u of invites){ %>
+        <div class="col-md-4">
+            <div class="well connection-card">
+                <h4 class="explore-connection-name">
+                    <a href="/users/<%- u.firstUser.id%>"><%- u.firstUser.firstName %> <%- u.firstUser.lastName %></a>
+                </h4>
+                <small><%- u.firstUser.email %></small>
+                <br>
+                <div class="btn-group connection-button-group" role="group">
+                    <form action="/connections/invite/accept" method="post" class="add-connection-form">
+                        <input type="hidden" name="id" value="<%- u.id%>">
+                        <button class="btn btn-default btn-block btn-success">Accept</button>
+                    </form>
+                    <form action="/connections/invite/reject" method="post" class="add-connection-form">
+                        <input type="hidden" name="id" value="<%- u.id%>">
+                        <button class="btn btn-default btn-block btn-danger">Reject</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    </div>
+<% include ../layouts/footer %>

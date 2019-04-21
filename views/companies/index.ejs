@@ -1,0 +1,52 @@
+<% include ../layouts/header %>
+    <h1>Explore Companies</h1>
+    <div class="row">
+        <% for (let company of companies) { %>
+            <% isConnection = false %>
+            <% for(let follows of user.follows) { %>
+                <% if(company.id === follows.companyId ) { %>
+                    <% isConnection = true %>
+                <% } %>
+            <% } %>
+            <% if(!isConnection) { %>
+            <div class="col-md-4">
+            <div class="well connection-card">
+                <h4 class="explore-connection-name"><%- company.companyName %></h4>
+                <small><%- company.email %></small>
+                <br>
+                <div class="btn-group connection-button-group" role="group">
+                        <a href="/companies/<%- company.id %>" class="btn btn-primary btn-block">View Profile</a>                    
+                    <form action="/companies/follow" method="post" class="add-connection-form">
+                        <input type="hidden" name="userId" value="<%- parseInt(user.id)%>">
+                        <input type="hidden" name="companyId" value="<%- parseInt(company.id)%>">
+                        <div class="btn-group connection-buttons" role="group">
+                            <button class="btn btn-default btn-block">Follow Company</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+            <% } else {%>
+            <div class="col-md-4">
+            <div class="well connection-card">
+                <h4 class="explore-connection-name"><%- company.companyName %></h4>
+                <small><%- company.email %></small>
+                <br>
+                <div class="btn-group connection-button-group" role="group">
+                    <div class="btn-group connection-buttons" role="group">
+                        <a href="/companies/<%- company.id %>" class="btn btn-primary btn-block">View Profile</a>                    
+                    </div>
+                    <form action="/companies/follow" method="post" class="add-connection-form">
+                        <input type="hidden" name="userId" value="<%- parseInt(user.id)%>">
+                        <input type="hidden" name="companyId" value="<%- parseInt(company.id)%>">
+                        <div class="btn-group connection-buttons" role="group">
+                            <button class="btn btn-default btn-block disabled">Follow Company</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+            <% } %>
+        <% } %>
+    </div>
+<% include ../layouts/footer %>

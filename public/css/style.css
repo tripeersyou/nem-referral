@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+
+* {
+    font-family: 'PT Sans', sans-serif;
+}
+
+.auth-header {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.auth-helpers {
+    display: block !important;
+    text-align: center;
+}
+
+.auth-form {
+    background-color: whitesmoke;
+    padding: 1em 2em 1em 2em !important;
+    border-radius: 5px;
+}
+
+.form-control {
+    border-radius: 0px !important;
+}
+
+.btn {
+    border-radius: 0px !important;
+}
+
+.add-connection-form {
+    display: inline;
+}
+
+.explore-connection-name {
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.connection-card {
+    border-radius: 0px !important;
+}
+
+.connection-card > small {
+    display: block;
+    text-align: center;
+}
+
+.connection-button-group{
+    width: 100%;
+}
+
+.connection-buttons {
+    width: 50%;
+}
