@@ -1,4 +1,10 @@
 <% include ../layouts/header %>
     <h1>Referral for <%- referral.listing.title %></h1>
-    <small>Referred: <%- referral.referred.firstName %> <%- referral.referred.lastName %> - >Referrer: <%- referral.referrer.firstName %> <%- referral.referrer.lastName %></small>
+    <small>Referred: <%- referral.referred.firstName %> <%- referral.referred.lastName %> - Referrer: <%- referral.referrer.firstName %> <%- referral.referrer.lastName %></small>
+    <br><br>
+    <p><%- referral.message %></p>
+    
+    <% if(type==='company') { %>
+        <a href="/listings/<%- referral.listing.id %>/referral/<%-referral.id%>/accept" class="btn btn-success">Accept Submission</a>
+    <% } %>
 <% include ../layouts/footer %>

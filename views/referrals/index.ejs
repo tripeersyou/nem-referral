@@ -1,0 +1,40 @@
+<% include ../layouts/header %>
+<h1>Your Submitted Referrals</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Job Listing</th>
+            <th>Company</th>
+            <th>Referral</th>
+            <th>Listing Status</th>
+            <th>Referral Status</th>
+            <th>Transaction Hash</th>
+            <th colspan="2">Actions</th>
+        </tr>
+</thead>
+    <tbody>
+        <% for(let referral of referrals) { %>
+        <tr>
+            <td><%- referral.listing.title %></td>
+            <td><%- referral.listing.company.companyName %></td>
+            <td><%- referral.referred.firstName %> <%- referral.referred.lastName %></td>
+            <% if(referral.listing.status){ %>
+                <td>Open for Referrals</td>
+            <% } else { %>
+                <td>Closed for Referrals</td>
+            <% } %>
+            <% if(referral.listing.status){ %>
+                <td>Accepted</td>
+                <td><%- referral.transactionHash %></td>
+            <% } else { %>
+                <td>Not Accepted</td>
+                <td>N/A</td>
+            <% } %>
+            <td><a href="/listings/<%- referral.listing.id%>/referral/<%- referral.id %>" class="btn btn-primary">View Referral</a></td>
+            <td><a href="/listings/<%- referral.listing.id%>" class="btn btn-success">View Listing</a></td>
+        </tr>
+        <% } %>
+    </tbody>
+    <%- console.log(user) %>
+</table>
+<% include ../layouts/footer %>

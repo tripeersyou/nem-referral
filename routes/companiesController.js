@@ -13,15 +13,6 @@ const company = require('../util/verifyCompany');
 const user = require('../util/verifyUser');
 const session = require('../util/verifyAuth');
 
-router.get('/', company.authenticate, (req, res) => {
-    Company.findAll().then(companies => {
-        res.render('companies/index', {
-            type: 'user',
-            companies: companies,
-            user: req.user.dataValues
-        })
-    });
-});
 
 router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
@@ -32,6 +23,11 @@ router.get('/login', (req, res) => {
             type: null
         })
     }
+});
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
 });
 
 router.post('/login', passport.authenticate('company', {
@@ -63,15 +59,44 @@ router.post('/register', (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-});
-
 router.post('/follow', user.authenticate, (req, res) => {
     Follow.create(req.body).then((follow) => {
         res.redirect(`/companies/${req.body.companyId}`);
     });
 });
 
+router.get('/show', session.authenticate, (req, res) => {
+    Company.findAll().then(companies => {
+        res.render('companies/index', {
+            type: 'user',
+            companies: companies,
+            user: req.user.dataValues
+        })
+    });
+});
+
+router.get('/:id', session.authenticate, (req, res) => {
+    Company.findOne({
+        where: {
+            id: req.params.id
+        },include: [{
+            all: true,
+            nested: true
+        }]
+    }).then(company => {
+        if(req._passport.session.user.type === 'company'){
+            res.render('companies/show', {
+                type: 'company',
+                company: company,
+                user: req.user.dataValues
+            })
+        } else {
+            res.render('companies/show', {
+                type: 'user',
+                company: company,
+                user: req.user.dataValues
+            })
+        }
+    });
+});
 module.exports = router;

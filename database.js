@@ -27,12 +27,12 @@ Company.hasMany(Follow,{onDelete: 'CASCADE'});
 Company.hasMany(Listing,{onDelete: 'CASCADE'});
 Listing.belongsTo(Company, {onDelete: 'CASCADE'});
 Listing.hasMany(Referral,{onDelete: 'CASCADE'});
-// Referral.belongsTo(Listing,{onDelete: 'CASCADE'});
+Referral.belongsTo(Listing,{onDelete: 'CASCADE'});
 Referral.belongsTo(User, {as: 'referrer', foreignkey: 'referrerId', onDelete: 'CASCADE'});
 Referral.belongsTo(User, {as: 'referred', foreignkey: 'referredId', onDelete: 'CASCADE'});
 User.hasMany(Referral, {as: 'referrer', foreignkey: 'referrerId', onDelete: 'CASCADE'});
 User.hasMany(Referral, {as: 'referred', foreignkey: 'referredId', onDelete: 'CASCADE'});
-sequelize.sync({force: true});
+sequelize.sync();
 
 module.exports = {
     User,

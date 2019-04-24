@@ -12,6 +12,8 @@ const {
 const company = require('../util/verifyCompany');
 const user = require('../util/verifyUser');
 const session = require('../util/verifyAuth');
+const nem = require('../nem');
+const sdk = require("nem-sdk").default;
 
 router.get('/', session.authenticate, (req, res) => {
     console.log(req.user);
@@ -159,6 +161,48 @@ router.get('/:listing_id/referral/:id', session.authenticate, (req, res) => {
     })
 });
 
+router.get('/:listing_id/referral/:id/accept', company.authenticate, (req, res) => {
+    Referral.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [{
+            all: true,
+            nested: true
+        }]
+    }).then(referral => {
+        res.render('referrals/accept', {
+            referral: referral,
+            type: 'company',
+            user: req.user.dataValues
+        });
+    });
+});
 
+router.post('/:listing_id/referral/:id/accept', company.authenticate, (req, res) => {
+    Referral.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(referral => {
+        let transactionEntity = nem.getEntity(req.body.privateKey, referral.amount, req.body.receipientAddress);
+        const endpoint = nem.model.objects.create("endpoint")(nem.model.nodes.defaultTestnet, nem.model.nodes.defaultPort);
+        sdk.com.requests.chain.time(endpoint).then(function (timeStamp) {
+            const common = nem.model.objects.create("common")("", req.body.privateKey);
+            const ts = Math.floor(timeStamp.receiveTimeStamp / 1000);
+            transactionEntity.timeStamp = ts;
+            const due = 60;
+            transactionEntity.deadline = ts + due * 60;
+            sdk.model.transactions.send(common, transactionEntity, endpoint).then(function(response){
+                console.log(response);
+                res.json(transactionEntity);
+            }, function(err){
+                console.log(err);
+            });
+        }, function (err) {
+            console.log(err);
+        });
+    });
+});
 
 module.exports = router;

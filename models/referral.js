@@ -20,14 +20,6 @@ module.exports = (sequelize, type) => {
             type: Sequelize.INTEGER,
             allowNull: true
         },
-        fee: {
-            type: Sequelize.INTEGER,
-            allowNull: true
-        },
-        blockHeight: {
-            type: Sequelize.INTEGER,
-            allowNull: true
-        },
         transactionHash: {
             type: Sequelize.STRING,
             allowNull: true

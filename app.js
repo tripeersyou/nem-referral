@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 
 // Passport dependencies
 const passport = require('passport');
@@ -38,12 +38,13 @@ let pagesController = require('./routes/pagesController');
 let companiesController = require('./routes/companiesController');
 let connectionsController = require('./routes/connectionsControllers');
 let listingsController = require('./routes/listingsController');
-
+let referralsController = require('./routes/referralsController');
 app.use('/', pagesController);
 app.use('/users', usersController);
 app.use('/companies', companiesController);
 app.use('/connections', connectionsController);
 app.use('/listings',listingsController);
+app.use('/referrals', referralsController)
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);

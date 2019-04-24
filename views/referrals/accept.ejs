@@ -1,0 +1,21 @@
+<% include ../layouts/header %>
+    <h1>Refer Connection</h1>
+    <small>Job: <%- referral.listing.title %></small>
+    <br><br>
+    <form action="/listings/<%- referral.listing.id %>/referral/<%-referral.id %>/accept" method="post" class="form">
+        <input type="hidden" name="referrerId" value="<%- referral.referrerId %>">
+        <input type="hidden" name="receipientAddress" value="<%- referral.referrer.address %>">
+        <input type="hidden" name="listingId" value="<%- referral.listing.id %>">
+        <input type="hidden" name="referredId" value="<%- referral.referredId %>">
+        <input type="hidden" name="message" value="<%- referral.message %>">
+        <div class="form-group">
+            <label>Amount</label>
+            <input type="number" name="amount" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Private Key</label>
+            <input type="password" name="privateKey" id="privateKey" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+    </form>
+<% include ../layouts/footer %>
