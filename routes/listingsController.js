@@ -186,21 +186,25 @@ router.post('/:listing_id/referral/:id/accept', company.authenticate, (req, res)
         }
     }).then(referral => {
         let transactionEntity = nem.getEntity(req.body.privateKey, referral.amount, req.body.receipientAddress);
-        const endpoint = nem.model.objects.create("endpoint")(nem.model.nodes.defaultTestnet, nem.model.nodes.defaultPort);
+        const endpoint = sdk.model.objects.create("endpoint")(sdk.model.nodes.defaultTestnet, sdk.model.nodes.defaultPort);
         sdk.com.requests.chain.time(endpoint).then(function (timeStamp) {
-            const common = nem.model.objects.create("common")("", req.body.privateKey);
+            const common = sdk.model.objects.create("common")("", req.body.privateKey);
             const ts = Math.floor(timeStamp.receiveTimeStamp / 1000);
             transactionEntity.timeStamp = ts;
             const due = 60;
             transactionEntity.deadline = ts + due * 60;
             sdk.model.transactions.send(common, transactionEntity, endpoint).then(function(response){
                 console.log(response);
+                referral.accepted = true;
+                referral.transactionHash = response.transactionHash.data
                 res.json(transactionEntity);
             }, function(err){
                 console.log(err);
+                res.redirect('/');
             });
         }, function (err) {
             console.log(err);
+            res.redirect('/');
         });
     });
 });

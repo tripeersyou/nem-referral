@@ -4,7 +4,7 @@ const passport = require('passport');
 const {User} = require('../database');
 const bcrypt = require('bcrypt-nodejs');
 const session = require('../util/verifyAuth');
-const user = require("../util/veriftyUser");
+const user = require("../util/verifyUser");
 router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
         res.redirect('/');
@@ -41,33 +41,12 @@ router.post('/update', user.authenticate, (req, res)=>{
         }
     }).then(user =>{
         user.address = req.body.address
-        user.update().then(()=>{
+        user.save().then(()=>{
            res.redirect('/') 
         });
     })
 })
 
-router.get('/:id', session.authenticate,(req, res)=>{
-    User.findOne({
-        where : {
-            id: req.params.id
-        }
-    }).then(user => {
-        if (req._passport.session.user.type === 'company') {
-            res.render('users/show',{
-               user: req.user.dataValues,
-               profile: user,
-               type: 'company'
-            });
-        } else {
-            res.render('users/show',{
-               user: req.user.dataValues,
-               profile: user,
-               type: 'user'
-            });
-        }
-    });
-})
 router.get('/register', (req, res) => {
     if (req.isAuthenticated()) {
         res.redirect('/');
@@ -91,5 +70,26 @@ router.post('/register', (req, res) => {
     }
 });
 
+router.get('/:id', session.authenticate,(req, res)=>{
+    User.findOne({
+        where : {
+            id: req.params.id
+        }
+    }).then(user => {
+        if (req._passport.session.user.type === 'company') {
+            res.render('users/show',{
+               user: req.user.dataValues,
+               profile: user,
+               type: 'company'
+            });
+        } else {
+            res.render('users/show',{
+               user: req.user.dataValues,
+               profile: user,
+               type: 'user'
+            });
+        }
+    });
+})
 
 module.exports = router;

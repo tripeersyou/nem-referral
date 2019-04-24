@@ -75,6 +75,26 @@ router.get('/show', session.authenticate, (req, res) => {
     });
 });
 
+router.get('/edit', company.authenticate, (req, res)=>{
+    res.render('users/edit',{
+        type: 'user',
+        user: req.user.dataValues
+    })
+})
+
+router.post('/update', company.authenticate, (req, res)=>{
+    Company.findOne({
+        where: {
+            id: req.user.dataValues.id
+        }
+    }).then(user =>{
+        user.address = req.body.address
+        user.save().then(()=>{
+           res.redirect('/') 
+        });
+    })
+})
+
 router.get('/:id', session.authenticate, (req, res) => {
     Company.findOne({
         where: {

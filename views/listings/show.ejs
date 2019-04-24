@@ -18,7 +18,7 @@
                 <% for(let refer of listing.referrals){%>
                 <tr>
                     <td><%- refer.referred.firstName %> <%- refer.referred.lastName %></td>
-                    <td><%- refer.referrer.firstName %> <%- refer.referred.lastName %></td>
+                    <td><%- refer.referrer.firstName %> <%- refer.referrer.lastName %></td>
                     <td><a href="/listings/<%- listing.id %>/referral/<%- refer.id %>" class="btn btn-primary">View Submission</a></td>
                     <td><a href="/users/<%- refer.referred.id%>" class="btn btn-default">View Referred Profile</a></td>
                     <td><a href="/users/<%- refer.referrer.id%>" class="btn btn-warning">View Referrer Profile</a></td>

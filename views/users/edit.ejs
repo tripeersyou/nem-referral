@@ -1,9 +1,10 @@
 <% include ../layouts/header %>
-<form action="/users/edit" method="post" class="form">
+<h1>Edit NEM Address</h1>
+<form action="/users/update" method="post" class="form">
     <div class="form-group">
         <label for="address">NEM Address</label>
         <input class="form-control" type="text" name="address" id="address">
     </div>
-    <button type="submit" class="btn btn-primary btn-block">Register</button>
+    <button type="submit" class="btn btn-primary">Register</button>
 </form>
 <% include ../layouts/footer %>
