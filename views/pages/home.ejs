@@ -1,3 +1,22 @@
 <% include ../layouts/header %>
-<h1>HOME</h1>
+<% if(user){ %>
+    <h1>Dashboard</h1>
+    <input type="hidden" id="address" value="<%- user.address %>">
+    <div class="col-md-6">
+        <h2>NEM Profile Details</h2>
+        <div id="accountDetails"></div>
+    </div>
+    <div class="col-md-6">
+        <h2>Unconfirmed Transactions</h2>
+        <div id="unconfirmedTransactions"></div>
+        <h2>Confirmed Transactions</h2>
+        <div id="confirmedTransactions"></div>
+        <h2>Recent Transactions</h2>
+        <div id="recentTransactions"></div>
+    </div>
+    <script src="/js/nem-sdk.js"></script>
+    <script src="/js/app.js"></script>
+<% } else {%>
+    <h1>HOME</h1>
+<% } %>
 <% include ../layouts/footer %>
