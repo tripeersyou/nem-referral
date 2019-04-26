@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 // Passport dependencies
 const passport = require('passport');
