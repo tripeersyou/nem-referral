@@ -45,6 +45,8 @@ npm start
 Server started on port 8000
 ```
 
+* In your browser go to [localhost:8000](http://localhost:8000) to use the application.
+
 ---
 
 ## Notes
