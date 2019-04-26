@@ -197,7 +197,9 @@ router.post('/:listing_id/referral/:id/accept', company.authenticate, (req, res)
                 console.log(response);
                 referral.accepted = true;
                 referral.transactionHash = response.transactionHash.data
-                res.json(transactionEntity);
+                referral.save().then(refer => {
+                  res.redirect(`/listings/${req.params.listing_id}`);
+                })
             }, function(err){
                 console.log(err);
                 res.redirect('/');

@@ -23,7 +23,7 @@
             <% } else { %>
                 <td>Closed for Referrals</td>
             <% } %>
-            <% if(referral.listing.status){ %>
+            <% if(!referral.listing.status){ %>
                 <td>Accepted</td>
                 <td><%- referral.transactionHash %></td>
             <% } else { %>
